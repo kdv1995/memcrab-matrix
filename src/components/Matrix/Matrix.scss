@@ -1,0 +1,59 @@
+@import "src/stytes/style.scss";
+.matrix__container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.table {
+  &__head {
+    text-align: center;
+  }
+  &__cell {
+    text-align: center;
+    padding: 5px;
+    border-radius: 5px;
+    background: $matrixCellBackground;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset,
+      rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset,
+      rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset,
+      rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px,
+      rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px,
+      rgba(0, 0, 0, 0.09) 0px 32px 16px;
+    &:hover {
+      background: $matrixCellHoveredBackground;
+      color: $matrixCellHoveredColor;
+    }
+    &_sum {
+      padding: 5px;
+      text-align: center;
+      border-radius: 5px;
+      background: $matrixCellAndColumnsAverageSum;
+      cursor: pointer;
+    }
+    &_closest {
+      background: $matrixCellClosestHoveredBackground;
+      color: $matrixCellClosestHoveredColor;
+    }
+  }
+  .table__columns {
+    padding: 5px;
+    text-align: center;
+    border-radius: 5px;
+    &_average {
+      background: $matrixCellAndColumnsAverageSum;
+      padding: 7px;
+      margin: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+      &_sum {
+        padding: 5px;
+        background: $matrixCellAndColumnsAverageSum;
+        padding: 7px;
+        margin: 5px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+    }
+  }
+}
