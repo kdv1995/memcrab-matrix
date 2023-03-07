@@ -1,5 +1,5 @@
 import { nanoid } from "nanoid";
-import { IRow, ICell } from "types/interfaces";
+import { IRow } from "types/interfaces";
 
 interface IGenerateRow {
   columns: number;

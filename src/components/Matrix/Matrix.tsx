@@ -66,7 +66,7 @@ export const Matrix: FC = () => {
     const rowId = id;
     const rowSum = matrixState
       .filter((rowFind) => rowFind.id === rowId)[0]
-      ?.cells.reduce((a, b) => a + b.amount, 0);
+      .cells.reduce((a, b) => a + b.amount, 0);
     setMatrixState((prevState) =>
       prevState.map((row) => {
         if (rowId === row.id)
@@ -110,7 +110,7 @@ export const Matrix: FC = () => {
         <thead>
           <tr>
             <td>№</td>
-            {matrixState[0]?.cells.map((cell, cellIndex) => (
+            {matrixState[0].cells.map((cell, cellIndex) => (
               <td className="table__head" key={cell.headId}>
                 {cellIndex + 1}
               </td>
@@ -119,7 +119,7 @@ export const Matrix: FC = () => {
           </tr>
         </thead>
         <tbody>
-          {matrixState?.map((row, rowIndex) => (
+          {matrixState.map((row, rowIndex) => (
             <tr key={row.id}>
               <td>{rowIndex + 1}</td>
               {row.cells.map((cell) => (
@@ -145,7 +145,7 @@ export const Matrix: FC = () => {
                 onMouseLeave={handleClearDeposit}
                 onMouseEnter={() => handleSumDeposit(row.id)}
               >
-                {row.cells?.reduce((a, b) => a + b.amount, 0)}
+                {row.cells.reduce((a, b) => a + b.amount, 0)}
               </td>
               <td>
                 <button
@@ -166,7 +166,7 @@ export const Matrix: FC = () => {
               </td>
             ))}
             <td className="table__columns_average_sum">
-              {findAverage?.reduce((a, b) => a + b, 0)}
+              {findAverage.reduce((a, b) => a + b, 0)}
             </td>
           </tr>
         </tbody>
