@@ -110,7 +110,7 @@ export const Matrix: FC = () => {
         <thead>
           <tr>
             <td>№</td>
-            {matrixState[0].cells.map((cell, cellIndex) => (
+            {matrixState[0]?.cells.map((cell, cellIndex) => (
               <td className="table__head" key={cell.headId}>
                 {cellIndex + 1}
               </td>

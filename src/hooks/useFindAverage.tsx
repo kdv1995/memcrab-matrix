@@ -1,6 +1,8 @@
 import { MatrixType } from "../types";
 
-export const useFindAverage = (matrix: MatrixType) => {
+export const useFindAverage = (matrix: MatrixType = []) => {
+  if (matrix.length === 0) return [];
+
   const res = matrix
     .map((rowFindRes) =>
       rowFindRes.cells.map((cellFindRes) => cellFindRes.amount)
