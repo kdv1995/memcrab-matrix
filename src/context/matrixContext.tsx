@@ -1,4 +1,4 @@
-import { createContext, FC, useEffect, useState } from "react";
+import { createContext, FC, useState } from "react";
 
 interface MatrixData {
   [key: string]: number;
@@ -20,9 +20,6 @@ interface IMatrixProviderProps {
 
 export const MatrixProvider: FC<IMatrixProviderProps> = ({ children }) => {
   const [matrixData, setMatrixData] = useState<MatrixData>({});
-  useEffect(() => {
-    localStorage.setItem("matrixData", JSON.stringify(matrixData));
-  }, [matrixData]);
 
   return (
     <MatrixContext.Provider value={{ matrixData, setMatrixData }}>

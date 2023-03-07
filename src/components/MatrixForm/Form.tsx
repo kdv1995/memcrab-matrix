@@ -1,8 +1,9 @@
 import { routes } from "constants/routes";
-import { MatrixContext, MatrixProvider } from "context";
+import { MatrixContext } from "context/matrixContext";
 import { FC, MouseEventHandler, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./MatrixForm.scss";
+
 interface FormData {
   [key: string]: number;
 }

@@ -1,9 +1,9 @@
 import "./Matrix.scss";
 import classNames from "classnames";
 import { FC, useContext } from "react";
-import { MatrixContext } from "context";
 import { useGenerateMatrix } from "hooks/useGenerateMatrix";
 import { useFindAverage } from "hooks/useFindAverage";
+import { MatrixContext } from "context/matrixContext";
 
 export const Matrix: FC = () => {
   const { matrixData } = useContext(MatrixContext);
@@ -36,6 +36,7 @@ export const Matrix: FC = () => {
                   className={classNames("table__cell", {
                     table__cell_closest: cell.closest,
                   })}
+                  // onClick={() => dispatch({ type: "CELL_INCREMENT" })}
                 >
                   {row.showDeposit ? `${cell.deposit}%` : cell.amount}
                 </td>
