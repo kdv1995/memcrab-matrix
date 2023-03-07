@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/kdv1995/memcrab-matrix/static/css/main.3b81dbd2.css",
-    "main.js": "/kdv1995/memcrab-matrix/static/js/main.98abeaf0.js",
+    "main.css": "/kdv1995/memcrab-matrix/static/css/main.ccbcd0c8.css",
+    "main.js": "/kdv1995/memcrab-matrix/static/js/main.bf3bf50a.js",
     "index.html": "/kdv1995/memcrab-matrix/index.html",
-    "main.3b81dbd2.css.map": "/kdv1995/memcrab-matrix/static/css/main.3b81dbd2.css.map",
-    "main.98abeaf0.js.map": "/kdv1995/memcrab-matrix/static/js/main.98abeaf0.js.map"
+    "main.ccbcd0c8.css.map": "/kdv1995/memcrab-matrix/static/css/main.ccbcd0c8.css.map",
+    "main.bf3bf50a.js.map": "/kdv1995/memcrab-matrix/static/js/main.bf3bf50a.js.map"
   },
   "entrypoints": [
-    "static/css/main.3b81dbd2.css",
-    "static/js/main.98abeaf0.js"
+    "static/css/main.ccbcd0c8.css",
+    "static/js/main.bf3bf50a.js"
   ]
 }
