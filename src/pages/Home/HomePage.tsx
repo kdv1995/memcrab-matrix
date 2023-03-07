@@ -4,9 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "./HomePage.scss";
 export const HomePage: FC = () => {
   const navigate = useNavigate();
-  const handleNavigateMatrixForm: MouseEventHandler<HTMLButtonElement> = (
-    event
-  ) => {
+  const handleNavigateMatrixForm: MouseEventHandler<HTMLButtonElement> = () => {
     navigate(routes.MatrixForm.path);
   };
 

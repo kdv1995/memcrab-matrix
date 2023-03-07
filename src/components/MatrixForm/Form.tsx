@@ -1,7 +1,7 @@
 import { routes } from "constants/routes";
 import { MatrixContext } from "context/matrixContext";
 import { FC, MouseEventHandler, useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import "./MatrixForm.scss";
 
 interface FormData {
@@ -12,8 +12,7 @@ export const MatrixForm: FC = () => {
   const handleNavigateToHomePage: MouseEventHandler<HTMLButtonElement> = () => {
     navigate(routes.HomePage.path);
   };
-
-  const { setMatrixData } = useContext(MatrixContext);
+  const { setMatrixData, setHighlightAmount } = useContext(MatrixContext);
   const [formData, setFormData] = useState<FormData>({
     rows: 0,
     columns: 0,
@@ -23,7 +22,8 @@ export const MatrixForm: FC = () => {
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setMatrixData(formData);
-    navigate(routes.Matrix.path);
+    setHighlightAmount(formData.highlightAmount);
+    navigate(routes.Matrix.path, { state: { isSubmitted: true } });
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {

@@ -4,6 +4,20 @@
   align-items: center;
   justify-content: center;
 }
+.matrix__button {
+  display: flex;
+  border-radius: 10%;
+  margin: 0 auto;
+  max-width: 150px;
+  padding: 15px 32px;
+  font-size: 18px;
+}
+.matrix__button_delete {
+  max-width: 150px;
+  border-radius: 10%;
+  padding: 15px;
+  font-size: 20px;
+}
 .table {
   &__head {
     text-align: center;
