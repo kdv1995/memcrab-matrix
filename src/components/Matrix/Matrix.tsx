@@ -1,11 +1,11 @@
 import "./Matrix.scss";
 import classNames from "classnames";
 import { FC, useContext, useEffect, useState } from "react";
-import { MatrixContext } from "context/matrixContext";
-import { useGenerateRow } from "hooks/useGenerateRow";
-import { routes } from "constants/routes";
 import { useNavigate } from "react-router-dom";
-import { useFindAverage } from "hooks/useFindAverage";
+import { MatrixContext } from "../../context/matrixContext";
+import { routes } from "../../constants/routes";
+import { useFindAverage } from "../../hooks/useFindAverage";
+import { useGenerateRow } from "../../hooks/useGenerateRow";
 
 export const Matrix: FC = () => {
   const navigate = useNavigate();

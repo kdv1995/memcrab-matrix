@@ -1,5 +1,6 @@
-import { Matrix } from "context/matrixContext";
-export const useFindAverage = (matrix: Matrix) => {
+import { MatrixType } from "../types";
+
+export const useFindAverage = (matrix: MatrixType) => {
   const res = matrix
     .map((rowFindRes) =>
       rowFindRes.cells.map((cellFindRes) => cellFindRes.amount)

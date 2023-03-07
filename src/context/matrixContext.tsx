@@ -1,6 +1,6 @@
-import { useGenerateMatrix } from "hooks/useGenerateMatrix";
 import { createContext, Dispatch, FC, SetStateAction, useState } from "react";
-import { IRow } from "types/interfaces";
+import { IRow } from "../types/interfaces";
+import { useGenerateMatrix } from "../hooks/useGenerateMatrix";
 
 export type Matrix = IRow[];
 

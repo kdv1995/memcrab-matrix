@@ -1,9 +1,9 @@
-import { Matrix } from "components/Matrix";
-import { MatrixForm } from "components/MatrixForm";
-import { routes } from "constants/routes";
-import { HomePage } from "pages";
 import { FC } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Matrix } from "../components/Matrix";
+import { MatrixForm } from "../components/MatrixForm";
+import { routes } from "../constants/routes";
+import { HomePage } from "../pages";
 
 export const ReactRouter: FC = () => (
   <BrowserRouter>
@@ -13,4 +13,4 @@ export const ReactRouter: FC = () => (
       <Route path={routes.Matrix.path} element={<Matrix />} />
     </Routes>
   </BrowserRouter>
-)
+);

@@ -1,7 +1,7 @@
-import { routes } from "constants/routes";
-import { MatrixContext } from "context/matrixContext";
 import { FC, MouseEventHandler, useContext, useState } from "react";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { routes } from "../../constants/routes";
+import { MatrixContext } from "../../context/matrixContext";
 import "./MatrixForm.scss";
 
 interface FormData {

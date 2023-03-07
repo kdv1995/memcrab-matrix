@@ -1,7 +1,7 @@
-import { App } from "app";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "stytes/style.scss";
+import "./stytes/style.scss";
+import { App } from "./app";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

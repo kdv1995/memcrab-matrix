@@ -1,4 +1,4 @@
-import { IRow } from "types/interfaces";
+import { IRow } from "../types/interfaces";
 
 export const useGenerateMatrix = (formData: {
   rows: number;
