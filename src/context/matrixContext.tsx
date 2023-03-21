@@ -1,21 +1,22 @@
-import React from "react";
-import {
+import React, {
   createContext,
-  Dispatch,
+  useState,
+  useMemo,
+  useEffect,
   FC,
   SetStateAction,
-  useEffect,
-  useMemo,
-  useState,
+  Dispatch,
 } from "react";
 import { useFindAverage } from "../hooks/useFindAverage";
 import { useGenerateMatrix } from "../hooks/useGenerateMatrix";
-import { IFormData, IMatrix } from "../types/interfaces";
+import { useGenerateRow } from "../hooks/useGenerateRow";
+import { IFormData, IMatrix, INewRow } from "../types/interfaces";
 
 interface IMatrixContext {
   matrixState: IMatrix[];
   setMatrixState: Dispatch<SetStateAction<IMatrix[]>>;
   average: number[];
+  addNewRow: INewRow;
   matrixFormData: IFormData;
   setMatrixFormData: Dispatch<SetStateAction<IFormData>>;
 }
@@ -23,6 +24,7 @@ interface IMatrixContext {
 export const MatrixContext = createContext<IMatrixContext>({
   matrixState: [],
   setMatrixState: () => {},
+  addNewRow: { id: "", showDeposit: false, cells: [] },
   average: [],
   matrixFormData: { rows: 0, columns: 0, highlightAmount: 0 },
   setMatrixFormData: () => {},
@@ -41,22 +43,36 @@ export const MatrixProvider: FC<IMatrixProviderProps> = React.memo(
     });
 
     const matrix = useGenerateMatrix(matrixFormData);
+    const addNewRow = useGenerateRow(matrixFormData);
     const [matrixState, setMatrixState] = useState(matrix);
-    const average = useFindAverage(matrixState);
-
     useEffect(() => {
       setMatrixState(matrix);
     }, [matrix]);
+    // const handleAddNewRow = (): void => {
+    //   setMatrixState((prevState) => [...prevState, addNewRow]);
+    // };
+    // const handleDeleteRow = (id: string) => {
+    //   setMatrixState((prevState) => prevState.filter((row) => row.id !== id));
+    // };
 
+    const average = useFindAverage(matrixState);
     const contextValue = useMemo(
       () => ({
         matrixState,
         setMatrixState,
+        average,
+        addNewRow,
+        matrixFormData,
+        setMatrixFormData,
+      }),
+      [
+        matrixState,
+        setMatrixState,
+        addNewRow,
         matrixFormData,
         setMatrixFormData,
         average,
-      }),
-      [matrixState, setMatrixState, average, matrixFormData, setMatrixFormData]
+      ]
     );
 
     return (

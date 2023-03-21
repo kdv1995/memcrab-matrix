@@ -6,17 +6,16 @@ export const useFindAverage = (matrix: IMatrix[] = []): number[] => {
     if (matrix.length === 0) {
       return [];
     }
-    const sumOfCells = matrix.reduce((acc, row) => {
-      return row.cells.reduce((rowSum, cell) => {
-        return rowSum + cell.amount;
-      }, acc);
-    }, 0);
-
-    const average = Math.round(
-      sumOfCells / (matrix.length * matrix[0].cells.length)
+    const columnSums = Array(matrix[0].cells.length).fill(0);
+    matrix.forEach((row) => {
+      row.cells.forEach((cell, columnIndex) => {
+        columnSums[columnIndex] += cell.amount;
+      });
+    });
+    const columnAverages = columnSums.map((sum) =>
+      Math.round(sum / matrix.length)
     );
-
-    return Array(matrix[0].cells.length).fill(average);
+    return columnAverages;
   }, [matrix]);
   return res;
 };
