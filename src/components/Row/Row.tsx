@@ -1,4 +1,3 @@
-import classNames from "classnames";
 import React, { FC, useMemo } from "react";
 import { Button } from "../Button";
 import { Cell } from "../Cell";
