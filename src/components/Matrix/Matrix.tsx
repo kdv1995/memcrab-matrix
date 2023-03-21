@@ -1,57 +1,65 @@
-import "./Matrix.scss";
 import classNames from "classnames";
-import { FC, useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import "./Matrix.scss";
+import { FC, useCallback, useContext } from "react";
 import { MatrixContext } from "../../context/matrixContext";
-import { routes } from "../../constants/routes";
-import { useFindAverage } from "../../hooks/useFindAverage";
+// import { routes } from "../../constants/routes";
 import { useGenerateRow } from "../../hooks/useGenerateRow";
+// import { useNavigate } from "react-router-dom";
+import { Button } from "../Button";
 
 export const Matrix: FC = () => {
-  const navigate = useNavigate();
-  const { matrix, matrixData, highlightAmount } = useContext(MatrixContext);
-  const [matrixState, setMatrixState] = useState(matrix);
-  const findAverage = useFindAverage(matrixState);
-  const handleCellIncrement = (id: string) => {
-    setMatrixState((prevState) =>
-      prevState.map((row) => ({
-        ...row,
-        cells: row.cells.map((cell) => {
-          if (cell.id === id) {
-            return { ...cell, amount: cell.amount + 1 };
-          }
-          return cell;
-        }),
-      }))
-    );
-  };
-  const handleClosestValues = (payload: any) => {
-    const { id, amount } = payload;
-    const findClosestCells = matrixState
-      .map((row) => row.cells)
-      .flat()
-      .filter((cell) => cell.id !== id)
-      .map((cell) => ({
-        id: cell.id,
-        amount: Math.abs(cell.amount - amount),
-      }))
-      .sort((a, b) => a.amount - b.amount)
-      .slice(0, highlightAmount);
+  // const navigate = useNavigate();
+  const { matrixState, setMatrixState, matrixFormData, average } =
+    useContext(MatrixContext);
+  const addNewRow = useGenerateRow(matrixFormData);
 
-    return setMatrixState((prevState) =>
-      prevState.map((row) => ({
-        ...row,
-        cells: row.cells.map((cellClosest) => ({
-          ...cellClosest,
-          closest: !!findClosestCells.find(
-            (cell) => cell.id === cellClosest.id
-          ),
-        })),
-      }))
-    );
-  };
+  const handleCellIncrement = useCallback(
+    (id: string) => {
+      setMatrixState((prevState) =>
+        prevState.map((row) => ({
+          ...row,
+          cells: row.cells.map((cell) => {
+            if (cell.id === id) {
+              return { ...cell, amount: cell.amount + 1 };
+            }
+            return cell;
+          }),
+        }))
+      );
+    },
+    [setMatrixState]
+  );
 
-  const handleClearClosesValues = (): void =>
+  const handleClosestValues = useCallback(
+    (payload: any) => {
+      const { id, amount } = payload;
+      const findClosestCells = matrixState
+        .map((row) => row.cells)
+        .flat()
+        .filter((cell) => cell.id !== id)
+        .map((cell) => ({
+          id: cell.id,
+          amount: Math.abs(cell.amount - amount),
+        }))
+        .sort((a, b) => a.amount - b.amount)
+        .slice(0, matrixFormData.highlightAmount);
+
+      return setMatrixState((prevState) =>
+        prevState.map((row) => ({
+          ...row,
+          cells: row.cells.map((cellClosest) => ({
+            ...cellClosest,
+            closest: !!findClosestCells.find(
+              (cell) => cell.id === cellClosest.id
+            ),
+          })),
+        }))
+      );
+    },
+    [matrixFormData.highlightAmount, matrixState, setMatrixState]
+  );
+
+  const handleClearClosesValues = useCallback(() => {
     setMatrixState((prevState) =>
       prevState.map((row) => ({
         ...row,
@@ -61,51 +69,61 @@ export const Matrix: FC = () => {
         })),
       }))
     );
+  }, [setMatrixState]);
 
-  const handleSumDeposit = (id: string) => {
-    const rowId = id;
-    const rowSum = matrixState
-      .filter((rowFind) => rowFind.id === rowId)[0]
-      .cells.reduce((a, b) => a + b.amount, 0);
-    setMatrixState((prevState) =>
-      prevState.map((row) => {
-        if (rowId === row.id)
-          return {
-            ...row,
-            showDeposit: true,
-            cells: row.cells.map((cell) => ({
-              ...cell,
-              deposit: Math.round((cell.amount / rowSum) * 100),
-            })),
-          };
-        return row;
-      })
-    );
+  const handleSumDeposit = useCallback(
+    (id: string) => {
+      const rowId = id;
+      const rowSum = matrixState
+        .filter((rowFind) => rowFind.id === rowId)[0]
+        .cells.reduce((a, b) => a + b.amount, 0);
+      setMatrixState((prevState) =>
+        prevState.map((row) => {
+          if (rowId === row.id)
+            return {
+              ...row,
+              showDeposit: true,
+              cells: row.cells.map((cell) => ({
+                ...cell,
+                deposit: Math.round((cell.amount / rowSum) * 100),
+              })),
+            };
+          return row;
+        })
+      );
+    },
+    [setMatrixState]
+  );
+  const handleAddNewRow = (): void => {
+    setMatrixState((prevState) => [...prevState, addNewRow]);
   };
-  const handleClearDeposit = (): void =>
+
+  const handleClearDeposit = useCallback(() => {
     setMatrixState((prevState) =>
       prevState.map((row) => ({
         ...row,
         showDeposit: false,
       }))
     );
-  const useHandleAddNewRow = () => {
-    const addNewRow = useGenerateRow({ columns: matrixData.columns });
-    setMatrixState((prevState) => [...prevState, addNewRow]);
-  };
-  const handleDeleteRow = (id: string) => {
+  }, [setMatrixState]);
+
+  const handleDeleteRow = useCallback((id: string) => {
     setMatrixState((prevState) => prevState.filter((row) => row.id !== id));
-  };
-  useEffect(() => {
-    if (!matrixState.length) {
-      navigate(routes.MatrixForm.path);
-    }
-  }, [matrixState, navigate]);
+  }, []);
+
+  // useEffect(() => {
+  //   if (!matrixState.length) {
+  //     navigate(routes.MatrixForm.path);
+  //   }
+  // }, [matrixState, navigate]);
   return (
     <div className="matrix-container">
-      <button className="matrix__button" onClick={useHandleAddNewRow}>
-        Add a row
-      </button>
+      <Button
+        className="button"
+        title="Add a row"
+        onClick={handleAddNewRow}
+        type="button"
+      />
       <table>
         <thead>
           <tr>
@@ -160,13 +178,13 @@ export const Matrix: FC = () => {
           ))}
           <tr>
             <td>Avg</td>
-            {findAverage.map((item) => (
+            {average.map((item) => (
               <td key={Math.random()} className="table__columns_average">
                 {item}
               </td>
             ))}
             <td className="table__columns_average_sum">
-              {findAverage.reduce((a, b) => a + b, 0)}
+              {average.reduce((a, b) => a + b, 0)}
             </td>
           </tr>
         </tbody>

@@ -2,18 +2,13 @@ import { FC, MouseEventHandler, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { routes } from "../../constants/routes";
 import { MatrixContext } from "../../context/matrixContext";
+import { IFormData } from "../../types/interfaces";
 import "./MatrixForm.scss";
 
-interface FormData {
-  [key: string]: number;
-}
 export const MatrixForm: FC = () => {
   const navigate = useNavigate();
-  const handleNavigateToHomePage: MouseEventHandler<HTMLButtonElement> = () => {
-    navigate(routes.HomePage.path);
-  };
-  const { setMatrixData, setHighlightAmount } = useContext(MatrixContext);
-  const [formData, setFormData] = useState<FormData>({
+  const { setMatrixFormData } = useContext(MatrixContext);
+  const [formData, setFormData] = useState<IFormData>({
     rows: 0,
     columns: 0,
     highlightAmount: 0,
@@ -21,16 +16,22 @@ export const MatrixForm: FC = () => {
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setMatrixData(formData);
-    setHighlightAmount(formData.highlightAmount);
-    navigate(routes.Matrix.path, { state: { isSubmitted: true } });
+    setMatrixFormData((prevState) => ({
+      ...prevState,
+      ...formData,
+    }));
+    navigate(routes.Matrix.path);
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
     setFormData({
       ...formData,
-      [event.target.name]: Number(event.target.value),
+      [name]: Number(value),
     });
+  };
+  const handleNavigateToHomePage: MouseEventHandler<HTMLButtonElement> = () => {
+    navigate(routes.HomePage.path);
   };
 
   return (
