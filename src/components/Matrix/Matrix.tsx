@@ -1,11 +1,20 @@
-import "./Matrix.scss";
 import { FC, memo, useContext } from "react";
 import { MatrixContext } from "../../context/matrixContext";
+import { Button } from "../Button";
+import { Container } from "../Container";
 import { Row } from "../Row";
 import { TableHead } from "../TableHead";
+import "./Matrix.scss";
+
 export const Matrix: FC = memo(() => {
-  const { average, matrixState, setMatrixState, matrixFormData } =
-    useContext(MatrixContext);
+  const {
+    average,
+    matrixState,
+    setMatrixState,
+    matrixFormData,
+    handleAddNewRow,
+    handleDeleteRow,
+  } = useContext(MatrixContext);
 
   const handleCellIncrement = (id: string) => {
     setMatrixState(
@@ -93,7 +102,13 @@ export const Matrix: FC = memo(() => {
     );
   };
   return (
-    <div className="matrix-container">
+    <Container variant="container">
+      <Button
+        title="Add row"
+        onClick={handleAddNewRow}
+        type="button"
+        className="button"
+      />
       <table>
         <TableHead matrixState={matrixState} />
         <tbody>
@@ -107,6 +122,7 @@ export const Matrix: FC = memo(() => {
               onHandleClearClosestValues={handleClearClosesValues}
               onHandleSumDeposit={handleSumDeposit}
               onHandleClearDeposit={handleClearDeposit}
+              onHandleDeleteRow={handleDeleteRow}
             />
           ))}
         </tbody>
@@ -124,6 +140,6 @@ export const Matrix: FC = memo(() => {
           </tr>
         </tfoot>
       </table>
-    </div>
+    </Container>
   );
 });

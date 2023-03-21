@@ -1,6 +1,5 @@
 import classNames from "classnames";
-import { FC } from "react";
-import { memo } from "react";
+import { FC, memo } from "react";
 interface CellProps {
   row: any;
   cell: any;

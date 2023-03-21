@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Matrix } from "../components/Matrix";
+import { Matrix } from "../components";
 import { MatrixForm } from "../components/MatrixForm";
 import { routes } from "../constants/routes";
 import { HomePage } from "../pages";

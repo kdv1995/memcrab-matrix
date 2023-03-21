@@ -6,6 +6,7 @@ interface IButtonProps {
   onClick: () => void;
   type: "button" | "submit" | "reset" | undefined;
 }
+
 export const Button: FC<IButtonProps> = ({
   type,
   title,

@@ -6,11 +6,12 @@ import React, {
   FC,
   SetStateAction,
   Dispatch,
+  useCallback,
 } from "react";
 import { useFindAverage } from "../hooks/useFindAverage";
 import { useGenerateMatrix } from "../hooks/useGenerateMatrix";
-import { useGenerateRow } from "../hooks/useGenerateRow";
 import { IFormData, IMatrix, INewRow } from "../types/interfaces";
+import { generateRow } from "../utils/generateRow";
 
 interface IMatrixContext {
   matrixState: IMatrix[];
@@ -19,6 +20,8 @@ interface IMatrixContext {
   addNewRow: INewRow;
   matrixFormData: IFormData;
   setMatrixFormData: Dispatch<SetStateAction<IFormData>>;
+  handleAddNewRow: () => void;
+  handleDeleteRow: (id: string) => void;
 }
 
 export const MatrixContext = createContext<IMatrixContext>({
@@ -28,6 +31,8 @@ export const MatrixContext = createContext<IMatrixContext>({
   average: [],
   matrixFormData: { rows: 0, columns: 0, highlightAmount: 0 },
   setMatrixFormData: () => {},
+  handleAddNewRow: () => {},
+  handleDeleteRow: () => {},
 });
 
 interface IMatrixProviderProps {
@@ -43,18 +48,22 @@ export const MatrixProvider: FC<IMatrixProviderProps> = React.memo(
     });
 
     const matrix = useGenerateMatrix(matrixFormData);
-    const addNewRow = useGenerateRow(matrixFormData);
+    const addNewRow = generateRow(matrixFormData);
     const [matrixState, setMatrixState] = useState(matrix);
     useEffect(() => {
       setMatrixState(matrix);
     }, [matrix]);
-    // const handleAddNewRow = (): void => {
-    //   setMatrixState((prevState) => [...prevState, addNewRow]);
-    // };
-    // const handleDeleteRow = (id: string) => {
-    //   setMatrixState((prevState) => prevState.filter((row) => row.id !== id));
-    // };
 
+    const handleAddNewRow = useCallback((): void => {
+      setMatrixState((prevState) => [...prevState, addNewRow]);
+    }, [addNewRow, setMatrixState]);
+
+    const handleDeleteRow = useCallback(
+      (id: string) => {
+        setMatrixState((prevState) => prevState.filter((row) => row.id !== id));
+      },
+      [setMatrixState]
+    );
     const average = useFindAverage(matrixState);
     const contextValue = useMemo(
       () => ({
@@ -64,6 +73,8 @@ export const MatrixProvider: FC<IMatrixProviderProps> = React.memo(
         addNewRow,
         matrixFormData,
         setMatrixFormData,
+        handleAddNewRow,
+        handleDeleteRow,
       }),
       [
         matrixState,
@@ -72,6 +83,8 @@ export const MatrixProvider: FC<IMatrixProviderProps> = React.memo(
         matrixFormData,
         setMatrixFormData,
         average,
+        handleAddNewRow,
+        handleDeleteRow,
       ]
     );
 

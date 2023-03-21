@@ -1,4 +1,6 @@
+import classNames from "classnames";
 import React, { FC, useMemo } from "react";
+import { Button } from "../Button";
 import { Cell } from "../Cell";
 
 interface RowProps {
@@ -9,6 +11,7 @@ interface RowProps {
   onHandleClearClosestValues: () => void;
   onHandleSumDeposit: (id: string) => void;
   onHandleClearDeposit: () => void;
+  onHandleDeleteRow: (id: string) => void;
 }
 
 export const Row: FC<RowProps> = React.memo(
@@ -20,6 +23,7 @@ export const Row: FC<RowProps> = React.memo(
     onHandleClearClosestValues,
     onHandleSumDeposit,
     onHandleClearDeposit,
+    onHandleDeleteRow,
   }) => {
     const sum = useMemo(
       () => row.cells.reduce((a: number, b: any) => a + b.amount, 0),
@@ -27,7 +31,7 @@ export const Row: FC<RowProps> = React.memo(
     );
 
     return (
-      <tr key={row.id}>
+      <tr key={row.id} onMouseOut={onHandleClearDeposit}>
         <td>{rowIndex + 1}</td>
         {row.cells.map((cell: any) => (
           <Cell
@@ -35,15 +39,23 @@ export const Row: FC<RowProps> = React.memo(
             key={cell.id}
             cell={cell}
             onHandleCellIncrement={() => onHandleCellIncrement(cell.id)}
+            onHandleClearClosestValues={onHandleClearClosestValues}
             onHandleClosestValues={() => onHandleClosestValues(cell)}
-            onHandleClearClosestValues={() => onHandleClearClosestValues()}
           />
         ))}
         <td
+          className="table__cell_sum"
           onMouseEnter={() => onHandleSumDeposit(row.id)}
-          onMouseLeave={onHandleClearDeposit}
         >
           {sum}
+        </td>
+        <td>
+          <Button
+            className=""
+            title="Delete"
+            type="button"
+            onClick={() => onHandleDeleteRow(row.id)}
+          />
         </td>
       </tr>
     );
